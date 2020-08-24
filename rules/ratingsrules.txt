@@ -1,0 +1,8 @@
+// 1) check whether or not profile exists for the user
+// 2) check whether or not job was already rated by the user 
+// 3) check whether or not response was already rated by the user 
+// 4) check whether or not rating responder is job creator
+
+// Rules
+// User cannot rate himself
+// Only job creator can rate responses
