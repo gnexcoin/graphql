@@ -614,7 +614,7 @@ const ActiveVote = new GraphQLObjectType({
 const VotingManaBar = new GraphQLObjectType({
     name: 'VotingManaBar',
     fields: () => ({
-        current_mana: { type: GraphQLInt},
+        current_mana: { type: GraphQLString},
         last_update_time: { type: GraphQLInt}
     })
 });
