@@ -1,4 +1,4 @@
-const api_link = "https://api.voilk.com";
+const api_link = "http://localhost:6989";
 const axios    = require('axios');
 
 const methods = {

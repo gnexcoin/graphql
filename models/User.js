@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    username: String,
-    commission: Number,
-    referral: String,
-    temp: Boolean,
+    inviter: String,
+    invitee: String,
     creation_time: Date
 });
 
+userSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("User", userSchema)
 

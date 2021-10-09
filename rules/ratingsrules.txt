@@ -1,7 +1,7 @@
-// 1) check whether or not profile exists for the user
-// 2) check whether or not job was already rated by the user 
-// 3) check whether or not response was already rated by the user 
-// 4) check whether or not rating responder is job creator
+// 1) check whvoilk or not profile exists for the user
+// 2) check whvoilk or not job was already rated by the user 
+// 3) check whvoilk or not response was already rated by the user 
+// 4) check whvoilk or not rating responder is job creator
 
 // Rules
 // User cannot rate himself

@@ -23,12 +23,45 @@ const io = require('socket.io-client');
 const { addUser, removeUser, getUser, getUserbyName, getUsersInRoom } = require('../chat/users');
 const { addMessage, getMessagesOfRoom } = require('../chat/messages');
 const { addNotification, getNotificationOfUser } = require('../chat/notifications');
+const assert = require("assert")
+const {
+    activate_package,
+    create_deposit,
+    create_withdraw,
+    delete_deposit,
+    process_transaction,
+    reject_transaction
+} = require("./mutationResolvers");
+const {
+    get_commission_history,
+    get_commission_history_p,
+    get_customers_history,
+    get_customers_history_p,
+    get_commissions_data,
+    get_commissions_info,
+    get_customers_data,
+    get_customers_info,
+    get_deposit_history,
+    get_deposit_history_p,
+    get_membership_info,
+    get_package_history,
+    get_package_history_p,
+    get_sales_data,
+    get_sales_info,
+    get_withdrawal_history,
+    get_withdrawal_history_p,
+    get_memberships,
+    get_deposit_requests,
+    get_deposits_stats,
+    get_withdrawals_stats,
+    get_withdrawal_requests
+} = require("./queryResolvers");
 require('dotenv').config();
 require('isomorphic-fetch');
 const mongoose = require('mongoose');
 const Grid = require('gridfs-stream');
 
-const ENDPOINT = 'https://graphql.voilk.com'
+const ENDPOINT = 'http://localhost:4000'
 const socket = io(ENDPOINT);
 // Verification Schemas
 const yup = require('yup');
@@ -226,6 +259,9 @@ const {
     GraphQLBoolean
 } = graphql;
 const { methods, voilk } = require('../api/api_data');
+const { Membership } = require('../models/index.js');
+const { ReferralType, MembershipType } = require('../types');
+const TransactionModel = require('../models/TransactionModel/TransactionModel.js');
 //voilk(methods.getWitnessSchedule.method, methods.getWitnessSchedule.params);
 
 const capitals = [
@@ -513,6 +549,22 @@ const ChainProperties =  new GraphQLObjectType({
    })
 });
 
+const RewardFund = new GraphQLObjectType({
+    name: 'RewardFund',
+    fields: () => ({
+        id: { type: GraphQLInt},
+        name: { type: GraphQLString},
+        reward_balance: { type: GraphQLString},
+        recent_claims: { type: GraphQLString},
+        last_update: { type: GraphQLString},
+        content_constant: { type: GraphQLString},
+        percent_curation_rewards: { type: GraphQLInt},
+        percent_content_rewards: { type: GraphQLInt},
+        author_reward_curve: { type: GraphQLString},
+        curation_reward_curve: { type: GraphQLString}
+    })
+})
+
 const DynamicGlobalProperties = new GraphQLObjectType({
     name: 'DynamicGlobalProperties',
     fields: () => ({
@@ -547,7 +599,38 @@ const DynamicGlobalProperties = new GraphQLObjectType({
         vsd_start_percent: { type: GraphQLInt},
         average_block_size: { type: GraphQLInt},
         current_reserve_ratio: { type: GraphQLInt},
-        max_virtual_bandwidth: { type: GraphQLString}
+        max_virtual_bandwidth: { type: GraphQLString},
+        post_reward_fund: { 
+            type: RewardFund,
+            resolve(parent, args){
+                const name = "post"
+                let getFundP = new Promise((resolve, reject) => {
+                    api.api.getRewardFund(name, function(err, result) {
+                    resolve(result)
+                    });
+                })
+                return getFundP.then(tr => {
+                    if(tr!==undefined){
+                        return tr
+                    }
+                    else {
+                        return {
+                            id: null,
+                            name: null,
+                            reward_balance: null,
+                            recent_claims: null,
+                            last_update: null,
+                            content_constant: null,
+                            percent_curation_rewards: null,
+                            percent_content_rewards: null,
+                            author_reward_curve: null,
+                            curation_reward_curve: null
+                          }                          
+                    }
+                })
+                
+            }
+        }
     })
 });
 
@@ -819,6 +902,12 @@ const Account = new GraphQLObjectType({
             }
         },
         name: {type: GraphQLString},
+        membership: {
+            type: MembershipType,
+            async resolve(parent, args){
+                return Membership.findOne({username: parent.name})
+            }
+        },
         owner:{type: KeyType},
         active:{type: KeyType},
         posting:{type: KeyType},
@@ -1079,18 +1168,6 @@ const TagType = new GraphQLObjectType({
         trending: {type: GraphQLString}
       })
 })
-
-const Referral = new GraphQLObjectType({
-    name: "Referral",
-    fields: () => ({
-        username: {type: GraphQLString},
-        referral: {type: GraphQLString},
-        commission: {type: GraphQLString},
-        creation_time: {type: GraphQLString},
-        temp: {type: GraphQLString},
-        error: {type: GraphQLString}
-    })
-});
 
 const CouponType =  new GraphQLObjectType({
     name: "CouponType",
@@ -1922,146 +1999,7 @@ const FollowerType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
    name: 'RootQueryType',
    fields: {
-       auth_active: {
-            type: AuthenticateType,
-            args: {
-                username: {type: GraphQLString},
-                wif: {type: GraphQLString}
-            },
-            resolve(parent, args){
-                let pubKey = get_public_key(args.wif);
-                let userName = args.username;
-                return fetch('http://localhost:4000/graphql', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name active {key_auths}} }' }),
-                })
-                .then(res => res.json())
-                .then(res => {
-                    let data = res.data.account;
-                    if(data!==null)
-                    {
-                      let pb = data.active.key_auths[0][0];
-                      let u = data.name;
-                      let e = verifykey(args.wif, pb);
-                      if (e==true&&u==userName)
-                      {
-                         return {
-                             authenticated: true,
-                             public_key: pubKey,
-                             private_key: args.wif
-                         }
-                      }else return {authenticated: false, public_key: null, private_key: null}
-                    }
-                    else return {authenticated: false, public_key: null, private_key: null}
-                })
-            }  
-       },
-       auth_posting: {
-        type: AuthenticateType,
-        args: {
-            username: {type: GraphQLString},
-            wif: {type: GraphQLString}
-        },
-        resolve(parent, args){
-            let pubKey = get_public_key(args.wif);
-            let userName = args.username;
-            return fetch('http://localhost:4000/graphql', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
-            })
-            .then(res => res.json())
-            .then(res => {
-                let data = res.data.account;
-                if(data!==null)
-                {
-                  let pb = data.posting.key_auths[0][0];
-                  let u = data.name;
-                  let e = verifykey(args.wif, pb);
-                  if (e==true&&u==userName)
-                  {
-                     return {
-                         authenticated: true,
-                         public_key: pubKey,
-                         private_key: args.wif
-                     }
-                  }else return {authenticated: false, public_key: null, private_key: null}
-                }
-                else return {authenticated: false, public_key: null, private_key: null}
-            })
-        }  
-       },
-       auth_owner: {
-        type: AuthenticateType,
-        args: {
-            username: {type: GraphQLString},
-            wif: {type: GraphQLString}
-        },
-        resolve(parent, args){
-            let pubKey = get_public_key(args.wif);
-            let userName = args.username;
-            return fetch('http://localhost:4000/graphql', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name owner {key_auths}} }' }),
-            })
-            .then(res => res.json())
-            .then(res => {
-                let data = res.data.account;
-                if(data!==null)
-                {
-                  let pb = data.owner.key_auths[0][0];
-                  let u = data.name;
-                  let e = verifykey(args.wif, pb);
-                  if (e==true&&u==userName)
-                  {
-                     return {
-                         authenticated: true,
-                         public_key: pubKey,
-                         private_key: args.wif
-                     }
-                  }else return {authenticated: false, public_key: null, private_key: null}
-                }
-                else return {authenticated: false, public_key: null, private_key: null}
-            })
-        }  
-       },
-       auth_memo: {
-        type: AuthenticateType,
-        args: {
-            username: {type: GraphQLString},
-            wif: {type: GraphQLString}
-        },
-        resolve(parent, args){
-            let pubKey = get_public_key(args.wif);
-            let userName = args.username;
-            return fetch('http://localhost:4000/graphql', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name memo_key} }' }),
-            })
-            .then(res => res.json())
-            .then(res => {
-                let data = res.data.account;
-                if(data!==null)
-                {
-                  let pb = data.memo_key;
-                  let u = data.name;
-                  let e = verifykey(args.wif, pb);
-                  if (e==true&&u==userName)
-                  {
-                     return {
-                         authenticated: true,
-                         public_key: pubKey,
-                         private_key: args.wif
-                     }
-                  }else return {authenticated: false, public_key: null, private_key: null}
-                }
-                else return {authenticated: false, public_key: null, private_key: null}
-            })
-        }  
-       },
+       
        lookup_accounts: {
         type: new GraphQLList(Account),
         args: {
@@ -4103,7 +4041,7 @@ const RootQuery = new GraphQLObjectType({
            },
            resolve(parent, args){
 
-            // check whether or not job profile exists
+            // check whvoilk or not job profile exists
             let response_id = generate_random_password("RSP");
             return fetch('http://localhost:4000/graphql', {
                 method: 'POST',
@@ -4116,7 +4054,7 @@ const RootQuery = new GraphQLObjectType({
                 {
                     if(res.data.is_profile_exists.result==true)
                     {
-                        // check whether or not job exists
+                        // check whvoilk or not job exists
                         return fetch('http://localhost:4000/graphql', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -4129,13 +4067,13 @@ const RootQuery = new GraphQLObjectType({
                                 let jobID = res.data.get_job_by_id._id;
                                 let username = res.data.get_job_by_id.username;
 
-                                // check whether or not the response creator is a job creator
+                                // check whvoilk or not the response creator is a job creator
                                 if (args.username == username)
                                 {
                                     return {error: "You cannot respond to your own Job.."}
                                 }
                                 wait(3000);
-                                // check whether or not a response was already posted.
+                                // check whvoilk or not a response was already posted.
                                 return fetch('http://localhost:4000/graphql', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
@@ -5071,7 +5009,7 @@ const RootQuery = new GraphQLObjectType({
            if(args.rating<=0||args.rating>5){
                return {error: "Rating can be 1 to 5 only.."}
            }
-           // check whether or not job exists
+           // check whvoilk or not job exists
            return fetch('http://localhost:4000/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -5081,7 +5019,7 @@ const RootQuery = new GraphQLObjectType({
           .then(res => {
             if(res.data.get_job_by_id!==null)
             {
-                // check whether or not job profile exists for the user
+                // check whvoilk or not job profile exists for the user
                 return fetch('http://localhost:4000/graphql', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -5093,7 +5031,7 @@ const RootQuery = new GraphQLObjectType({
                     {
                         if(res.data.is_profile_exists.result==true)
                         {
-                            // check whether or not job was already rated
+                            // check whvoilk or not job was already rated
                             return fetch('http://localhost:4000/graphql', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
@@ -5190,18 +5128,18 @@ const RootQuery = new GraphQLObjectType({
             if(args.rating<=0||args.rating>5){
                 return {error: "Rating can be 1 to 5 only.."}
             }
-            // Check whether or not response exists
+            // Check whvoilk or not response exists
             let nRS = Response.findOne({_id: args.response_id})
             return nRS.then( sss => {
                 if(nRS!=null){
 
-                    // Check whether or not job creator is rating the response.. 
+                    // Check whvoilk or not job creator is rating the response.. 
                     let nJP = Job.findOne({_id: args.job_id})
                     return nJP.then(jjj => {
                         if(jjj!=null){
                             if(jjj.username == args.from){
 
-                                // check whether or not job exists
+                                // check whvoilk or not job exists
                                 return fetch('http://localhost:4000/graphql', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
@@ -5211,7 +5149,7 @@ const RootQuery = new GraphQLObjectType({
                                 .then(res => {
                                     if(res.data.get_job_by_id!==null)
                                     {
-                                        // check whether or not job profile exists for the user
+                                        // check whvoilk or not job profile exists for the user
                                         return fetch('http://localhost:4000/graphql', {
                                             method: 'POST',
                                             headers: { 'Content-Type': 'application/json' },
@@ -5223,7 +5161,7 @@ const RootQuery = new GraphQLObjectType({
                                             {
                                                 if(res.data.is_profile_exists.result==true)
                                                 {
-                                                    // check whether or not job was already rated
+                                                    // check whvoilk or not job was already rated
                                                     return fetch('http://localhost:4000/graphql', {
                                                         method: 'POST',
                                                         headers: { 'Content-Type': 'application/json' },
@@ -6185,11 +6123,12 @@ const RootQuery = new GraphQLObjectType({
                 let trp = new Promise(function(resolve, reject) {
                     
                     api.broadcast.transfer(args.wif, args.from, args.to, args.amount, args.memo, function(err, result) {
-                        //console.log(err, result);
+                        console.log(err, result);
                         resolve(result);
                     });
                 })
                 return trp.then(tr => {
+                    
                     if(tr!==undefined){
                         return {result: true, transaction_id: tr.id}
                     }
@@ -7563,7 +7502,7 @@ const RootQuery = new GraphQLObjectType({
         }  
        },
        get_referrals: {
-           type: new GraphQLList(Referral),
+           type: new GraphQLList(ReferralType),
            args: {
                all: {type: GraphQLBoolean},
                username: {type: GraphQLString}
@@ -7588,7 +7527,7 @@ const RootQuery = new GraphQLObjectType({
             }
        },
        get_sponsor: {
-            type: Referral,
+            type: ReferralType,
             args: {
                 username: {type: GraphQLString}
             },
@@ -7643,11 +7582,25 @@ const RootQuery = new GraphQLObjectType({
            args: {
                username: {type: GraphQLString},
                password: {type: GraphQLString},
+
+               referral: {type: GraphQLString},
                accesstoken: {type: GraphQLString}
            },
-           resolve(result, args){
+           async resolve(result, args){
 
             let validate_t = validate_token(args.accesstoken);
+            // get referral membership
+            const custs = await User.find({inviter: args.referral}).count()
+            const membr = await Membership.findOne({username: args.referral})
+
+            let referral = args.referral
+            if(membr && custs < membr.max_invites){
+                referral = args.referral
+            }
+            else {
+                referral = "promoter"
+            }
+
 
             if(validate_t){
 
@@ -7664,6 +7617,9 @@ const RootQuery = new GraphQLObjectType({
                let memoKey = keys["memoPubkey"];
                
                let jsonMetadata = '{"profile":{"profile_image":"https://image.flaticon.com/icons/svg/1372/1372315.svg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg"}}';
+               console.log("Creator:", creator)
+               console.log("Wif:", wif)
+               console.log("fee:", fee)
                let accP = new Promise((resolve, reject) =>{
                 api.broadcast.accountCreate(
                     wif, 
@@ -7676,16 +7632,43 @@ const RootQuery = new GraphQLObjectType({
                     memoKey, 
                     jsonMetadata, 
                     function(err, result) {
-			console.log(err, result)
+                        console.log(err, result)
+                        // Sign up delegation bonus
+                        if(!err){
+                            const coining_shares = "5.000000 COINS"
+                            api.broadcast.delegateCoiningShares(wif, creator, args.username, coining_shares, function(errt, rest) {
+                                //console.log(errt, rest);
+                            });
+                        }
                         resolve(result)
                     }
                 );
                })
+
                
-               return accP.then(x => {
-                   console.log(x)
-                   if(x){
-                      return keys; 
+               
+               return accP.then(async x => {
+                   console.log("Created Account", x)
+                   if(x){	
+                    let user = new User({
+                        inviter: referral,
+                        invitee: args.username,
+                        creation_time: new Date(),
+                        
+                    })
+                    let membership = new Membership({
+                        username: args.username,
+                        membership: "Basic 0",
+                        max_invites: 10,
+                        max_withdrawal: 50,
+                        max_commission: 50,
+                        created_at: new Date(),
+                        updated_at: new Date(),
+            
+                    })
+                    const mmm = await membership.save();
+                    const uss = await user.save()
+                    return keys; 
                    }
                    else return {errors: "Could not create account.."}
                }) 
@@ -7896,13 +7879,322 @@ const RootQuery = new GraphQLObjectType({
                return voilk(methods.getAccountBandWidthForum.method, `["${args.name}", "forum"]`);
            }
        },
-
+       auth_active: {
+        type: AuthenticateType,
+        args: {
+            username: {type: GraphQLString},
+            wif: {type: GraphQLString}
+        },
+        resolve(parent, args){
+            let pubKey = get_public_key(args.wif);
+            let userName = args.username;
+            return fetch('http://localhost:4000/graphql', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name active {key_auths}} }' }),
+            })
+            .then(res => res.json())
+            .then(res => {
+                let data = res.data.account;
+                if(data!==null)
+                {
+                  let pb = data.active.key_auths[0][0];
+                  let u = data.name;
+                  let e = verifykey(args.wif, pb);
+                  if (e==true&&u==userName)
+                  {
+                     return {
+                         authenticated: true,
+                         public_key: pubKey,
+                         private_key: args.wif
+                     }
+                  }else return {authenticated: false, public_key: null, private_key: null}
+                }
+                else return {authenticated: false, public_key: null, private_key: null}
+            })
+        }  
+   },
+   auth_posting: {
+    type: AuthenticateType,
+    args: {
+        username: {type: GraphQLString},
+        wif: {type: GraphQLString}
+    },
+    resolve(parent, args){
+        let pubKey = get_public_key(args.wif);
+        let userName = args.username;
+        return fetch('http://localhost:4000/graphql', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
+        })
+        .then(res => res.json())
+        .then(res => {
+            let data = res.data.account;
+            if(data!==null)
+            {
+              let pb = data.posting.key_auths[0][0];
+              let u = data.name;
+              let e = verifykey(args.wif, pb);
+              if (e==true&&u==userName)
+              {
+                 return {
+                     authenticated: true,
+                     public_key: pubKey,
+                     private_key: args.wif
+                 }
+              }else return {authenticated: false, public_key: null, private_key: null}
+            }
+            else return {authenticated: false, public_key: null, private_key: null}
+        })
+    }  
+   },
+   auth_owner: {
+    type: AuthenticateType,
+    args: {
+        username: {type: GraphQLString},
+        wif: {type: GraphQLString}
+    },
+    resolve(parent, args){
+        let pubKey = get_public_key(args.wif);
+        let userName = args.username;
+        return fetch('http://localhost:4000/graphql', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name owner {key_auths}} }' }),
+        })
+        .then(res => res.json())
+        .then(res => {
+            let data = res.data.account;
+            if(data!==null)
+            {
+              let pb = data.owner.key_auths[0][0];
+              let u = data.name;
+              let e = verifykey(args.wif, pb);
+              if (e==true&&u==userName)
+              {
+                 return {
+                     authenticated: true,
+                     public_key: pubKey,
+                     private_key: args.wif
+                 }
+              }else return {authenticated: false, public_key: null, private_key: null}
+            }
+            else return {authenticated: false, public_key: null, private_key: null}
+        })
+    }  
+   },
+   auth_memo: {
+    type: AuthenticateType,
+    args: {
+        username: {type: GraphQLString},
+        wif: {type: GraphQLString}
+    },
+    resolve(parent, args){
+        let pubKey = get_public_key(args.wif);
+        let userName = args.username;
+        return fetch('http://localhost:4000/graphql', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name memo_key} }' }),
+        })
+        .then(res => res.json())
+        .then(res => {
+            let data = res.data.account;
+            if(data!==null)
+            {
+              let pb = data.memo_key;
+              let u = data.name;
+              let e = verifykey(args.wif, pb);
+              if (e==true&&u==userName)
+              {
+                 return {
+                     authenticated: true,
+                     public_key: pubKey,
+                     private_key: args.wif
+                 }
+              }else return {authenticated: false, public_key: null, private_key: null}
+            }
+            else return {authenticated: false, public_key: null, private_key: null}
+        })
+    }  
+   },
+       get_commission_history,
+       get_commissions_data,
+       get_commissions_info,
+       get_customers_data,
+       get_customers_info,
+       get_deposit_history,
+       get_membership_info,
+       get_package_history,
+       get_sales_data,
+       get_sales_info,
+       get_withdrawal_history,
+       get_memberships,
+       get_commission_history_p,
+       get_deposit_history_p,
+       get_package_history_p,
+       get_withdrawal_history_p,
+       get_customers_history,
+       get_customers_history_p,
+       get_deposit_requests,
+       get_deposits_stats,
+       get_withdrawals_stats,
+       get_withdrawal_requests
    }
 });
 
 const Mutation = new GraphQLObjectType({
     name: "Mutation",
     fields: {
+        create_deposit,
+        create_withdraw,
+
+        activate_package,
+        process_transaction,
+        reject_transaction,
+        
+        delete_deposit,
+        auth_active: {
+            type: AuthenticateType,
+            args: {
+                username: {type: GraphQLString},
+                wif: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                let pubKey = get_public_key(args.wif);
+                let userName = args.username;
+                return fetch('http://localhost:4000/graphql', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name active {key_auths}} }' }),
+                })
+                .then(res => res.json())
+                .then(res => {
+                    let data = res.data.account;
+                    if(data!==null)
+                    {
+                      let pb = data.active.key_auths[0][0];
+                      let u = data.name;
+                      let e = verifykey(args.wif, pb);
+                      if (e==true&&u==userName)
+                      {
+                         return {
+                             authenticated: true,
+                             public_key: pubKey,
+                             private_key: args.wif
+                         }
+                      }else return {authenticated: false, public_key: null, private_key: null}
+                    }
+                    else return {authenticated: false, public_key: null, private_key: null}
+                })
+            }  
+       },
+       auth_posting: {
+        type: AuthenticateType,
+        args: {
+            username: {type: GraphQLString},
+            wif: {type: GraphQLString}
+        },
+        resolve(parent, args){
+            let pubKey = get_public_key(args.wif);
+            let userName = args.username;
+            return fetch('http://localhost:4000/graphql', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
+            })
+            .then(res => res.json())
+            .then(res => {
+                let data = res.data.account;
+                if(data!==null)
+                {
+                  let pb = data.posting.key_auths[0][0];
+                  let u = data.name;
+                  let e = verifykey(args.wif, pb);
+                  if (e==true&&u==userName)
+                  {
+                     return {
+                         authenticated: true,
+                         public_key: pubKey,
+                         private_key: args.wif
+                     }
+                  }else return {authenticated: false, public_key: null, private_key: null}
+                }
+                else return {authenticated: false, public_key: null, private_key: null}
+            })
+        }  
+       },
+       auth_owner: {
+        type: AuthenticateType,
+        args: {
+            username: {type: GraphQLString},
+            wif: {type: GraphQLString}
+        },
+        resolve(parent, args){
+            let pubKey = get_public_key(args.wif);
+            let userName = args.username;
+            return fetch('http://localhost:4000/graphql', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name owner {key_auths}} }' }),
+            })
+            .then(res => res.json())
+            .then(res => {
+                let data = res.data.account;
+                if(data!==null)
+                {
+                  let pb = data.owner.key_auths[0][0];
+                  let u = data.name;
+                  let e = verifykey(args.wif, pb);
+                  if (e==true&&u==userName)
+                  {
+                     return {
+                         authenticated: true,
+                         public_key: pubKey,
+                         private_key: args.wif
+                     }
+                  }else return {authenticated: false, public_key: null, private_key: null}
+                }
+                else return {authenticated: false, public_key: null, private_key: null}
+            })
+        }  
+       },
+       auth_memo: {
+        type: AuthenticateType,
+        args: {
+            username: {type: GraphQLString},
+            wif: {type: GraphQLString}
+        },
+        resolve(parent, args){
+            let pubKey = get_public_key(args.wif);
+            let userName = args.username;
+            return fetch('http://localhost:4000/graphql', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name memo_key} }' }),
+            })
+            .then(res => res.json())
+            .then(res => {
+                let data = res.data.account;
+                if(data!==null)
+                {
+                  let pb = data.memo_key;
+                  let u = data.name;
+                  let e = verifykey(args.wif, pb);
+                  if (e==true&&u==userName)
+                  {
+                     return {
+                         authenticated: true,
+                         public_key: pubKey,
+                         private_key: args.wif
+                     }
+                  }else return {authenticated: false, public_key: null, private_key: null}
+                }
+                else return {authenticated: false, public_key: null, private_key: null}
+            })
+        }  
+       },
         make_a_post: {
             type: TransferType,
             args: {
@@ -8394,31 +8686,6 @@ const Mutation = new GraphQLObjectType({
         }     
     },
       
-    addReferral: {
-        type: Referral,
-        args: {
-            username: {type: GraphQLString},
-            referral: {type: GraphQLString},
-            accesstoken: {type: GraphQLString}
-        },
-        resolve(parent, args){
-            let user = new User({
-                username: args.username,
-                referral: args.referral,
-                creation_time: new Date(),
-                temp: true
-            });
-
-            let validate_t = validate_token(args.accesstoken);
-
-            if(validate_t){
-                return user.save();
-            }
-            else{
-                return {error: "Access Token Invalid!!"}
-            }
-        }
-    },
     generate_coupon: {
         type: CouponType,
         args: {
