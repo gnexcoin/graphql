@@ -232,15 +232,18 @@ const shopValidationSchema = yup.object().shape({
 
 const mongoURI = process.env.MONGO_URL;
 
-const conn =  mongoose.createConnection(mongoURI, {useNewUrlParser: true});
+const promise = mongoose.connect(mongoURI, {   
+    useNewUrlParser: true,
+    useUnifiedTopology: true });
+const conn = mongoose.connection;
+  
 
 let gfs;
-
-conn.once('open', function () {
-    //console.log("connected to mongodb");
-    gfs = Grid(conn.db, mongoose.mongo);
+  
+conn.once("open", () => {
+    gfs = Grid(conn, mongoose.mongo);
     gfs.collection('uploads');
-})
+});
 
 const fee     = "0.001 VOILK";
 const SecretToken = process.env.ACCESS_CODE;
