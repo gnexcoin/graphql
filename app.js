@@ -41,7 +41,7 @@ const Grid = require("gridfs-stream");
 let { PrivateKey, key_utils } = require("voilk/lib/auth/ecc");
 
 const mongoURI = process.env.MONGO_URL;
-const FileURL = "http://localhost:4000/image/";
+const FileURL = "https://graphql.voilk.com/image/";
 const MongoClient = require("mongodb").MongoClient;
 require('dotenv').config();
 require("isomorphic-fetch");
@@ -261,6 +261,7 @@ app.get('/image/:filename', (req, res) => {
           err: 'No file exists'
         });
       }
+      console.log(file, err)
   
       // Check if image
       if (file.contentType === 'image/jpeg' || 
