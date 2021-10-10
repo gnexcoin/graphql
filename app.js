@@ -100,10 +100,14 @@ const promise = mongoose.connect(mongoURI, {
 const conn = mongoose.connection;
 
 // Init gfs
+let gridFSBucket;
 let gfs;
 
 conn.once("open", () => {
   gfs = Grid(conn, mongoose.mongo);
+  gridFSBucket = mongoose.mongo.GridFSBucket(conn.db, {
+    bucketName: 'uploads'
+  });
   gfs.collection('uploads');
 });
 const validateFile = (file, cb) => {
@@ -254,8 +258,6 @@ app.post('/upload/files/', upload.array('photos', 20), function (req, res, next)
 // @route GET /image/:filename
 // @desc Display Image
 app.get('/image/:filename', (req, res) => {
-    gfs = Grid(conn, mongoose.mongo);
-    gfs.collection('uploads');
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
       // Check if file
       if (!file || file.length === 0) {
@@ -272,7 +274,9 @@ app.get('/image/:filename', (req, res) => {
       file.contentType === 'image/gif'
       ) {
         // Read output to browser
-        const readstream = gfs.createReadStream(file.filename);
+        
+        const readstream = gridFSBucket.openDownloadStream(file.filename);
+        //gfs.createReadStream(file.filename);
         readstream.pipe(res);
       } else {
         res.status(404).json({
