@@ -275,7 +275,7 @@ app.get('/image/:filename', (req, res) => {
       ) {
         // Read output to browser
         
-        const readstream = gridFSBucket.openDownloadStream(file.filename);
+        const readstream = gridFSBucket.openDownloadStream(file._id);
         //gfs.createReadStream(file.filename);
         readstream.pipe(res);
       } else {
