@@ -105,7 +105,7 @@ let gfs;
 
 conn.once("open", () => {
   gfs = Grid(conn, mongoose.mongo);
-  gridFSBucket = new mongoose.mongo.GridFSBucket(conn, {
+  gridFSBucket = new mongoose.mongo.GridFSBucket(conn.db, {
     bucketName: 'uploads'
   });
   gfs.collection('uploads');
