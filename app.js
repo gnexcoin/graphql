@@ -254,6 +254,8 @@ app.post('/upload/files/', upload.array('photos', 20), function (req, res, next)
 // @route GET /image/:filename
 // @desc Display Image
 app.get('/image/:filename', (req, res) => {
+    gfs = Grid(conn, mongoose.mongo);
+    gfs.collection('uploads');
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
       // Check if file
       if (!file || file.length === 0) {
