@@ -265,7 +265,6 @@ app.get('/image/:filename', (req, res) => {
           err: 'No file exists'
         });
       }
-      console.log(file, err)
   
       // Check if image
       if (file.contentType === 'image/jpeg' || 
