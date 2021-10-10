@@ -94,27 +94,17 @@ app.use(
   })
 );
 
-mongoose.connect(mongoURI, {   
+const promise = mongoose.connect(mongoURI, {   
   useNewUrlParser: true,
   useUnifiedTopology: true });
-mongoose.connection.once("open", () => {
-  //console.log("success");
-});
-
-
-// Create mongo connection
-const conn = mongoose.createConnection(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+const conn = mongoose.connection;
 
 // Init gfs
 let gfs;
 
 conn.once("open", () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection("uploads");
+  gfs = Grid(conn, mongoose.mongo);
+  gfs.collection('uploads');
 });
 const validateFile = (file, cb) => {
   allowedFileTypes = /jpeg|jpg|png|gif/;
@@ -130,7 +120,7 @@ const validateFile = (file, cb) => {
 };
 // Create storage engine
 const storage = new GridFsStorage({
-  url: mongoURI,
+  db: promise,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
