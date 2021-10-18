@@ -1,6 +1,6 @@
 
 
-return fetch('http://localhost:4000/graphql', {
+return fetch('https://graphql.voilk.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query: '{ get_response_of_job(job_id: "'+args.job_id+'") { _id username }}' }),
@@ -17,7 +17,7 @@ return fetch('http://localhost:4000/graphql', {
 })
 
 
-return fetch('http://localhost:4000/graphql', {
+return fetch('https://graphql.voilk.com/graphql', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ query: '{ auth_active(username: "'+args.from+'", wif: "'+args.wif+'") { authenticated }}' }),

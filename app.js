@@ -191,7 +191,7 @@ app.post('/upload/files/:username/:key', upload.array('photos', 20), function (r
     
     let authenticate = new Promise((resolve, reject) => {
 
-    fetch('http://localhost:4000/graphql', {
+    fetch('https://graphql.voilk.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: '{ account(name: "'+username+'") { name posting {key_auths}} }' }),
