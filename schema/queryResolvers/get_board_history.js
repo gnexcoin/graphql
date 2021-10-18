@@ -16,7 +16,7 @@ const get_board_history = {
                 }
               }
             }
-          ]).limit(50)
+          ]).limit(100)
           result.sort((a, b)=> b.count - a.count)
         return result
 
