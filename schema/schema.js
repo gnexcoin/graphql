@@ -6620,24 +6620,24 @@ const RootQuery = new GraphQLObjectType({
          })
        }
        },
-       get_location_by_ip: {
-           type: LocationType,
-           args: {
-               ip: {type: GraphQLString}
-           },
-           resolve(parent, args){
+    //    get_location_by_ip: {
+    //        type: LocationType,
+    //        args: {
+    //            ip: {type: GraphQLString}
+    //        },
+    //        resolve(parent, args){
             
-             if(!ValidateIPaddress(args.ip))
-             return {error: "Invalid IP"};
+    //          if(!ValidateIPaddress(args.ip))
+    //          return {error: "Invalid IP"};
 
-             let ipdata = getLocation(args.ip);
-             return ipdata.then(d =>{
-                //console.log(d); 
-                return d;
-                });
+    //          let ipdata = getLocation(args.ip);
+    //          return ipdata.then(d =>{
+    //             //console.log(d); 
+    //             return d;
+    //             });
 
-           }
-       },
+    //        }
+    //    },
        add_credit: {
            type: ModifyType,
            args: {
