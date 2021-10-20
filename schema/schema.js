@@ -7624,9 +7624,6 @@ const RootQuery = new GraphQLObjectType({
                let memoKey = keys["memoPubkey"];
                
                let jsonMetadata = '{"profile":{"profile_image":"https://image.flaticon.com/icons/svg/1372/1372315.svg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg"}}';
-               console.log("Creator:", creator)
-               console.log("Wif:", wif)
-               console.log("fee:", fee)
                let accP = new Promise((resolve, reject) =>{
                 api.broadcast.accountCreate(
                     wif, 
@@ -7655,7 +7652,6 @@ const RootQuery = new GraphQLObjectType({
                
                
                return accP.then(async x => {
-                   console.log("Created Account", x)
                    if(x){	
                     let user = new User({
                         inviter: referral,
