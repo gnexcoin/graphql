@@ -7519,7 +7519,7 @@ const RootQuery = new GraphQLObjectType({
                    return User.find();
                }
                else
-               return User.find({username: args.username});
+               return User.find({inviter: args.username});
            }
        },
        get_referrals_count: {
@@ -7528,7 +7528,7 @@ const RootQuery = new GraphQLObjectType({
                 username: {type: GraphQLString}
             },
             resolve(parent, args){
-              let count = User.find({username: args.username}).countDocuments();
+              let count = User.find({inviter: args.username}).countDocuments();
               
               return {count: count};
             }
@@ -7539,7 +7539,7 @@ const RootQuery = new GraphQLObjectType({
                 username: {type: GraphQLString}
             },
             resolve(parent, args){
-               return User.findOne({referral: args.username});
+               return User.findOne({invitee: args.username});
             }
        },
        generate_password: {
