@@ -10,7 +10,7 @@ const get_current_value = {
              //console.log(err, data);
              if(err) resolve(0)
              if(data && data.asks && data.asks.length >0)
-             resolve(parseFloat(data.asks[0].real_price).toFixed(2));
+             resolve(parseFloat(data.asks[0].real_price).toFixed(4));
              else resolve(0)
             });
         })
