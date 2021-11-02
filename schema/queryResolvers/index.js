@@ -25,6 +25,7 @@ const { get_deposits_stats } = require("./get_deposits_stats");
 const { get_withdrawals_stats } = require("./get_withdrawals_stats");
 const { get_bad_users } = require("./get_bad_users");
 const { get_board_history } = require("./get_board_history");
+const { get_current_value } = require("./get_current_value");
 
 
 module.exports = {
@@ -51,5 +52,6 @@ module.exports = {
     get_withdrawals_stats,
     get_withdrawal_requests,
     get_bad_users,
-    get_board_history
+    get_board_history,
+    get_current_value
 }

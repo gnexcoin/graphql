@@ -58,7 +58,8 @@ const {
     get_deposits_stats,
     get_withdrawals_stats,
     get_withdrawal_requests,
-    get_board_history
+    get_board_history,
+    get_current_value
 } = require("./queryResolvers");
 require('dotenv').config();
 require('isomorphic-fetch');
@@ -8022,6 +8023,7 @@ const RootQuery = new GraphQLObjectType({
         })
     }  
    },
+    get_current_value,
        get_commission_history,
        get_commissions_data,
        get_commissions_info,
