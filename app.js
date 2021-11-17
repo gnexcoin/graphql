@@ -336,7 +336,7 @@ app.get('/image/:filename', (req, res) => {
         let newMEssage = {
             username: "admin", 
             text: `Welcome ${result.username}! to ${groupid}`,
-            profile_image: "https://image.flaticon.com/icons/svg/1372/1372315.svg", 
+            profile_image: "https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg", 
             id: randomString("M"), 
             groupid,
             created_at: new Date()}

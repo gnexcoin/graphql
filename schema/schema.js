@@ -2029,7 +2029,7 @@ const RootQuery = new GraphQLObjectType({
                 
                             if(ndata.json_metadata=='')
                             {
-                                ndata.json_metadata = '{"profile":{"profile_image":"https://image.flaticon.com/icons/svg/1372/1372315.svg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
+                                ndata.json_metadata = '{"profile":{"profile_image":"https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
                             }
                             let profile = JSON.parse(ndata.json_metadata);
                             ndata.json_metadata = profile.profile;
@@ -2079,7 +2079,7 @@ const RootQuery = new GraphQLObjectType({
                 
                             if(ndata.json_metadata=='')
                             {
-                                ndata.json_metadata = '{"profile":{"profile_image":"https://image.flaticon.com/icons/svg/1372/1372315.svg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
+                                ndata.json_metadata = '{"profile":{"profile_image":"https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
                             }
                             let profile = JSON.parse(ndata.json_metadata);
                             ndata.json_metadata = profile.profile;
@@ -7624,7 +7624,7 @@ const RootQuery = new GraphQLObjectType({
                var posting = { weight_threshold: 1, account_auths: [], key_auths: [[keys.postingPubkey, 1]] };
                let memoKey = keys["memoPubkey"];
                
-               let jsonMetadata = '{"profile":{"profile_image":"https://image.flaticon.com/icons/svg/1372/1372315.svg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg"}}';
+               let jsonMetadata = '{"profile":{"profile_image":"https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg"}}';
                let accP = new Promise((resolve, reject) =>{
                 api.broadcast.accountCreate(
                     wif, 
