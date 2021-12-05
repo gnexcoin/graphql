@@ -24,8 +24,8 @@ const get_memberships = {
         let newPackages = []
         packages.map(pk => {
             //console.log(pk)
-            pk.cost = ((pk.promoter_share + pk.buyer_share + pk.company_share)*result).toFixed(3)
-            console.log(pk)
+            pk.cost = parseFloat(((pk.promoter_share + pk.buyer_share + pk.company_share)*result).toFixed(3))
+            //console.log(pk)
             newPackages.push(pk)
         })
 
