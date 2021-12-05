@@ -21,14 +21,36 @@ const activate_package = {
     },
     async resolve(parent, args){
         
+        let pm = new Promise((resolve, reject) => {
+            voilk.api.getMarketOrderBook(1, function(err, data) {
+             //console.log(err, data);
+             if(err) resolve(0)
+             if(data && data.asks && data.asks.length >0)
+             resolve(parseFloat(data.asks[0].real_price).toFixed(4));
+             else resolve(0)
+            });
+        })
+        let result = await pm 
+        
+        if(!result || result < 0.01) {
+            result = 0.01
+        }
+        
+        let newPackages = []
+        packages.map(pk => {
+            //console.log(pk)
+            pk.cost = ((pk.promoter_share + pk.buyer_share + pk.company_share)*result).toFixed(3)
+            console.log(pk)
+            newPackages.push(pk)
+        })
 
         let auth = await authorize(args.username, args.wif)
         assert(auth, "Could not authorize.")
         
-        let planIndex = packages.findIndex(el => el.id === args.package_id)
+        let planIndex = newPackages.findIndex(el => el.id === args.package_id)
         assert(planIndex !== -1, "This package does not exist.")
 
-        let plan = packages[planIndex]
+        let plan = newPackages[planIndex]
         let bal = await account(args.username)
         assert(bal >= plan.cost, "You don't have sufficient balance.")
 

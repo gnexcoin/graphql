@@ -2,7 +2,8 @@ const graphql = require("graphql")
 const {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLFloat
 } = graphql;
 
 const UPlanType = new GraphQLObjectType({
@@ -16,7 +17,7 @@ const UPlanType = new GraphQLObjectType({
         promoter_share: {type: GraphQLInt},
         company_share: {type: GraphQLInt},
         max_withdrawal: {type: GraphQLInt},
-        cost: {type: GraphQLInt}
+        cost: {type: GraphQLFloat}
     })
 });
 
