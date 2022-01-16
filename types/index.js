@@ -15,6 +15,7 @@ const {TransactionPaginateType}        = require("./TransactionPaginateType")
 const {CommissionPaginateType}        = require("./CommissionPaginateType")
 const {PackagePaginateType}        = require("./PackagePaginateType")
 const {InviterPaginateType}        = require("./InviterPaginateType")
+const {TradeType}        = require("./TradeType")
 
 module.exports = { 
     ProfileType, 
@@ -33,5 +34,6 @@ module.exports = {
     TransactionPaginateType, 
     CommissionPaginateType, 
     PackagePaginateType, 
-    InviterPaginateType
+    InviterPaginateType,
+    TradeType
 }

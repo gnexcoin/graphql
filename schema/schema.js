@@ -32,6 +32,8 @@ const {
     process_transaction,
     reject_transaction,
     add_bad_user,
+    open_buy,
+    open_sell,
     remove_bad_user
 } = require("./mutationResolvers");
 const {
@@ -8064,6 +8066,8 @@ const Mutation = new GraphQLObjectType({
         delete_deposit,
         add_bad_user,
         remove_bad_user,
+        open_sell,
+        open_buy,
         auth_active: {
             type: AuthenticateType,
             args: {
