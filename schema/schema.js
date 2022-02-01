@@ -915,7 +915,12 @@ const Account = new GraphQLObjectType({
         membership: {
             type: MembershipType,
             async resolve(parent, args){
-                return Membership.findOne({username: parent.name})
+                let custs = await User.find({inviter: parent.name}).count()
+                let member = await Membership.findOne({username: parent.name})
+                //console.log(member)
+                member.current_invites = custs
+                return member;
+                //return Membership.findOne({username: parent.name})
             }
         },
         owner:{type: KeyType},
