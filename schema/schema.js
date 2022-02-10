@@ -2126,11 +2126,11 @@ const RootQuery = new GraphQLObjectType({
          let trp = new Promise(function(resolve, reject) {
             api.api.getFollowers(args.username, args.start, args.what, args.limit, function(err, result) {
                 //console.log(err, result);
-                if(result && result.length > 0 && skip){
+                if(result && result.length > 0 && args.skip){
                         
                     resolve(result)
                 }
-                else if(result && result.length > 0 && !skip){
+                else if(result && result.length > 0 && !args.skip){
                     let users = []
                     users = result;
                     if(!(args.start=="")){
@@ -2167,11 +2167,11 @@ const RootQuery = new GraphQLObjectType({
          let trp = new Promise(function(resolve, reject) {
             api.api.getFollowing(args.username, args.start, args.what, args.limit, function(err, result) {
                 //console.log(err, result);
-                    if(result && result.length > 0 && skip){
+                    if(result && result.length > 0 && args.skip){
                         
                         resolve(result)
                     }
-                    else if(result && result.length > 0 && !skip){
+                    else if(result && result.length > 0 && !args.skip){
                         let users = []
                         users = result;
                         if(!(args.start=="")){
