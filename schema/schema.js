@@ -2114,23 +2114,28 @@ const RootQuery = new GraphQLObjectType({
             start: {type: GraphQLString},
             what: {type: GraphQLString},
             limit: {type: GraphQLInt},
+            skip: {type: GraphQLBoolean}
         },
         resolve(parent, args) {
             
          let trp = new Promise(function(resolve, reject) {
             api.api.getFollowers(args.username, args.start, args.what, args.limit, function(err, result) {
                 //console.log(err, result);
-                    if(result){
-                        let users = []
-                        users = result;
-                        if(!(args.start=="")){
-                            users.shift()
-                        }
-                        resolve(users)
+                if(result && result.length > 0 && skip){
+                        
+                    resolve(result)
+                }
+                else if(result && result.length > 0 && !skip){
+                    let users = []
+                    users = result;
+                    if(!(args.start=="")){
+                        users.shift()
                     }
-                    else {
-                        reject(err)
-                    }
+                    resolve(users)
+                }
+                else {
+                    reject(err)
+                }
                 });
          })
          return trp.then(tr => {
@@ -2150,13 +2155,18 @@ const RootQuery = new GraphQLObjectType({
             start: {type: GraphQLString},
             what: {type: GraphQLString},
             limit: {type: GraphQLInt},
+            skip: {type: GraphQLBoolean}
         },
         resolve(parent, args) {
             
          let trp = new Promise(function(resolve, reject) {
             api.api.getFollowing(args.username, args.start, args.what, args.limit, function(err, result) {
                 //console.log(err, result);
-                    if(result){
+                    if(result && result.length > 0 && skip){
+                        
+                        resolve(result)
+                    }
+                    else if(result && result.length > 0 && !skip){
                         let users = []
                         users = result;
                         if(!(args.start=="")){
