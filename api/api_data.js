@@ -1,4 +1,4 @@
-const api_link = "http://localhost:6989";
+const api_link = "https://api.voilk.com";
 const axios    = require('axios');
 
 const methods = {
@@ -480,7 +480,9 @@ voilk = (method, params="[]", single) => {
                 }
                 let profile = JSON.parse(ndata.json_metadata);
 
-                if(profile.profile.profile_image == "" || profile.profile.profile_image == "https://image.flaticon.com/icons/svg/1372/1372315.svg")
+                if(!profile.profile.profile_image || 
+                    profile.profile.profile_image == "" || 
+                    profile.profile.profile_image == "https://image.flaticon.com/icons/svg/1372/1372315.svg")
                 {
                     profile.profile.profile_image = "https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg"
 
@@ -500,7 +502,7 @@ voilk = (method, params="[]", single) => {
                         ndata.json_metadata = '{"profile":{"profile_image":"https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
                     }
                     let profile = JSON.parse(ndata.json_metadata);
-                    if(profile.profile.profile_image == "" || profile.profile.profile_image == "https://image.flaticon.com/icons/svg/1372/1372315.svg")
+                    if(!profile.profile.profile_image || profile.profile.profile_image == "" || profile.profile.profile_image == "https://image.flaticon.com/icons/svg/1372/1372315.svg")
                     {
                         profile.profile.profile_image = "https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg"
                         
