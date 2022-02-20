@@ -1,4 +1,4 @@
-const api_link = "https://api.voilk.com";
+const api_link = "http://gnexportal.com:9876";
 const axios    = require('axios');
 
 const methods = {
@@ -8,31 +8,31 @@ const methods = {
     },
     getAccountBandWidthMarket: {
         method: "condenser_api.get_account_bandwidth",
-        params: "[\"bilalhaider\",\"market\"]"
+        params: "[\"Starfall\",\"market\"]"
     },
     getAccountBandWidthForum: {
         method: "condenser_api.get_account_bandwidth",
-        params: "[\"bilalhaider\",\"forum\"]"
+        params: "[\"Starfall\",\"forum\"]"
     },
     getAccountHistory: {
         method: "condenser_api.get_account_history",
-        params: "[\"bilalhaider\", -1, 2]"
+        params: "[\"Starfall\", -1, 2]"
     },
     getAccountReputations: {
         method: "condenser_api.get_account_reputations",
-        params: "[\"bilalhaider\", 1]"
+        params: "[\"Starfall\", 1]"
     },
     getAccountVotes: {
         method: "condenser_api.get_account_votes",
-        params: "[\"bilalhaider\"]"
+        params: "[\"Starfall\"]"
     },
     getAccount: {
         method: "condenser_api.get_accounts",
-        params:"[[\"bilalhaider\"]]"
+        params:"[[\"Starfall\"]]"
     },
     getAccounts: {
         method: "condenser_api.get_accounts",
-        params:"[[\"bilalhaider\"]]"
+        params:"[[\"Starfall\"]]"
     },
     getAccountCount: {
         method: "condenser_api.get_account_count",
@@ -48,19 +48,19 @@ const methods = {
     },
     getBlog: {
         method: "condenser_api.get_blog",
-        params: "[\"bilalhaider\",-1,5]"
+        params: "[\"Starfall\",-1,5]"
     },
     getBlogAuthors: {
         method: "condenser_api.get_blog_authors",
-        params: "[\"bilalhaider\"]"
+        params: "[\"Starfall\"]"
     },
     getBlogEntries: {
         method: "condenser_api.get_blog_entries",
-        params: "[\"bilalhaider\",0,5]"
+        params: "[\"Starfall\",0,5]"
     },
     getActiveVotes: {
         method: "condenser_api.get_active_votes",
-        params: "[\"bilalhaider\", \"es6-javascript-cheat-sheet\"]"
+        params: "[\"Starfall\", \"es6-javascript-cheat-sheet\"]"
     },
     getActiveWitnesses: {
         method: "condenser_api.get_active_witnesses",
@@ -84,11 +84,11 @@ const methods = {
     },
     getContent: {
         method: "condenser_api.get_content",
-        params: "[\"bilalhaider\", \"es6-javascript-cheat-sheet\"]"
+        params: "[\"Starfall\", \"es6-javascript-cheat-sheet\"]"
     },
     getContentReplies: {
         method: "condenser_api.get_content_replies",
-        params: "[\"bilalhaider\", \"es6-javascript-cheat-sheet\"]"
+        params: "[\"Starfall\", \"es6-javascript-cheat-sheet\"]"
     },
     getConversionRequests: {
         method: "condenser_api.get_conversion_requests",
@@ -100,7 +100,7 @@ const methods = {
     },
     getDiscussionsByAuthorBeforeDate: {
         method: "condenser_api.get_discussions_by_author_before_date",
-        params: "[\"bilalhaider\",\"es6-javascript-cheat-sheet\",\"2018-12-16T22:49:43\",1]"
+        params: "[\"Starfall\",\"es6-javascript-cheat-sheet\",\"2018-12-16T22:49:43\",1]"
     },
     getDiscussionsByBlog: {
         method: "condenser_api.get_discussions_by_blog",
@@ -116,7 +116,7 @@ const methods = {
     },
     getDiscussionsByComments: {
         method: "condenser_api.get_discussions_by_comments",
-        params: "[{\"start_author\":\"bilalhaider\",\"start_permlink\":\"es6-javascript-cheat-sheet\",\"limit\":10,\"truncate_body\":0}]"
+        params: "[{\"start_author\":\"Starfall\",\"start_permlink\":\"es6-javascript-cheat-sheet\",\"limit\":10,\"truncate_body\":0}]"
     },
     getDiscussionsByCreated: {
         method: "condenser_api.get_discussions_by_created",
@@ -144,19 +144,19 @@ const methods = {
     },
     getEscrow: {
         method: "condenser_api.get_escrow",
-        params: "[\"bilalhaider\", 1]"
+        params: "[\"Starfall\", 1]"
     },
     getExpiringDelegations: {
         method: "condenser_api.get_expiring_vesting_delegations",
-        params: "[\"voilk\",\"2018-12-19T00:00:00\"]"
+        params: "[\"GNEX\",\"2018-12-19T00:00:00\"]"
     },
     getFeed: {
         method: "condenser_api.get_feed",
-        params: "[\"bilalhaider\",0,1]"
+        params: "[\"Starfall\",0,1]"
     },
     getFeedEntries: {
         method: "condenser_api.get_feed_entries",
-        params: "[\"bilalhaider\",0,1]"
+        params: "[\"Starfall\",0,1]"
     },
     getFeedHistory: {
         method: "condenser_api.get_feed_history",
@@ -164,23 +164,23 @@ const methods = {
     },
     getFollowCount: {
         method: "condenser_api.get_follow_count",
-        params: "[\"bilalhaider\"]"
+        params: "[\"Starfall\"]"
     },
     getFollowers: {
         method: "condenser_api.get_followers",
-        params: "[\"bilalhaider\",null,\"blog\",10]"
+        params: "[\"Starfall\",null,\"blog\",10]"
     },
     getMutes: {
         method: "condenser_api.get_followers",
-        params: "[\"bilalhaider\",null,\"ignore\",10]"
+        params: "[\"Starfall\",null,\"ignore\",10]"
     },
     getFollowing: {
         method: "condenser_api.get_following",
-        params: "[\"bilalhaider\",null,\"blog\",10]"
+        params: "[\"Starfall\",null,\"blog\",10]"
     },
     getIgnored: {
         method: "condenser_api.get_following",
-        params: "[\"bilalhaider\",null,\"ignore\",10]"
+        params: "[\"Starfall\",null,\"ignore\",10]"
     },
     getHardForkVersion: {
         method: "condenser_api.get_hardfork_version",
@@ -188,7 +188,7 @@ const methods = {
     },
     getKeyReferences: {
         method: "condenser_api.get_key_references",
-        params: "[[\"SHR5NtYEdtSmUpoYkNVhRPrT4VEyD6pWSuyHuPcBKdEpVcyr2fKPF\"]]"
+        params: "[[\"GNX7FfSSdimKrQ9fW5tNnQ3h3nFdX1YMmCFhZDjvRJKnZaivT6HCM\"]]"
     },
     getMarketHistory: {
         method: "condenser_api.get_market_history",
@@ -204,7 +204,7 @@ const methods = {
     },
     getOpenOrders: {
         method: "condenser_api.get_open_orders",
-        params: "[\"bilalhaider\"]"
+        params: "[\"Starfall\"]"
     },
     getOperationsInBlock: {
         method: "condenser_api.get_ops_in_block",
@@ -216,15 +216,15 @@ const methods = {
     },
     getOwnerHistory: {
         method:"condenser_api.get_owner_history",
-        params:"[\"bilalhaider\"]"
+        params:"[\"starfall\"]"
     },
     getPostDiscussionsByPayout: {
         method:"condenser_api.get_post_discussions_by_payout",
-        params:"[{\"tag\":\"bilalhaider\",\"limit\":1,\"truncate_body\":0}]"
+        params:"[{\"tag\":\"starfall\",\"limit\":1,\"truncate_body\":0}]"
     },
     getRebloggedBy: {
         method:"condenser_api.get_reblogged_by",
-        params:"[\"bilalhaider\",\"firstpost\"]"
+        params:"[\"Starfall\",\"firstpost\"]"
     },
     getRecentTrades: {
         method:"condenser_api.get_recent_trades",
@@ -232,11 +232,11 @@ const methods = {
     },
     getRecoveryRequest: {
         method:"condenser_api.get_recovery_request",
-        params:"[\"bilalhaider\"]"
+        params:"[\"Starfall\"]"
     },
     getRepliesByLastUpdate: {
         method:"condenser_api.get_replies_by_last_update",
-        params:"[\"bilalhaider\",\"firstpost\",1]"
+        params:"[\"Starfall\",\"firstpost\",1]"
     },
     getRewardFund: {
         method: "condenser_api.get_reward_fund",
@@ -244,19 +244,19 @@ const methods = {
     },
     getSavingsWithdrawFrom: {
         method:"condenser_api.get_savings_withdraw_from",
-        params: "[\"bilalhaider\"]"
+        params: "[\"Starfall\"]"
     },
     getSavingsWithdrawTo: {
         method:"condenser_api.get_savings_withdraw_to",
-        params:"[\"bilalhaider\"]"
+        params:"[\"Starfall\"]"
     },
     getState: {
         method: "condenser_api.get_state",
-        params:"[\"/@bilalhaider\"]"
+        params:"[\"/@Starfall\"]"
     },
     getTagsUsedByAuthor: {
         method:"condenser_api.get_tags_used_by_author",
-        params: "[\"bilalhaider\"]"
+        params: "[\"Starfall\"]"
     },
     getTicker: {
         method:"condenser_api.get_ticker",
@@ -284,7 +284,7 @@ const methods = {
     },
     getVestingDelegations: {
         method:"condenser_api.get_vesting_delegations",
-        params: "[\"bilalhaider\",null,10]"
+        params: "[\"Starfall\",null,10]"
     },
     getVolume: {
         method:"condenser_api.get_volume",
@@ -292,19 +292,19 @@ const methods = {
     },
     getOutGoingWithdrawRoutes: {
         method:"condenser_api.get_withdraw_routes",
-        params:"[\"bilalhaider\",\"outgoing\"]"
+        params:"[\"Starfall\",\"outgoing\"]"
     },
     getIncomingWithdrawRoutes: {
         method:"condenser_api.get_withdraw_routes",
-        params:"[\"bilalhaider\",\"incoming\"]"
+        params:"[\"Starfall\",\"incoming\"]"
     },
     getAllWithdrawRoutes: {
         method:"condenser_api.get_withdraw_routes",
-        params:"[\"bilalhaider\",\"all\"]"
+        params:"[\"Starfall\",\"all\"]"
     },
     getWitnessByAccount: {
         method:"condenser_api.get_witness_by_account",
-        params:"[\"bilalhaider\"]"
+        params:"[\"Starfall\"]"
     },
     getWitnessCount: {
         method:"condenser_api.get_witness_count",
@@ -324,7 +324,7 @@ const methods = {
     },
     lookUpAccountNames: {
         method:"condenser_api.lookup_account_names",
-        params:"[[\"bilalhaider\"]]"
+        params:"[[\"Starfall\"]]"
     },
     lookUpAccounts: {
         method:"condenser_api.lookup_accounts",
@@ -336,7 +336,7 @@ const methods = {
     },
     verifyAccountAuthority: {
         method:"condenser_api.verify_account_authority",
-        params:"[\"bilalhaider\",[\"SHR4zzL6gvnajH6NH95s5z8JDdecHsPHd8rNzdraTiehkFGq7mjMb\"]]"
+        params:"[\"Starfall\",[\"GNX7FfSSdimKrQ9fW5tNnQ3h3nFdX1YMmCFhZDjvRJKnZaivT6HCM\"]]"
     },
     verifyAuthority: {
         method:"condenser_api.verify_authority",
@@ -344,15 +344,15 @@ const methods = {
     },
     getAccountReferrences: {
         method: "condenser_api.get_account_references",
-        params: "[\"bilalhaider\"]"
+        params: "[\"Starfall\"]"
     },
     getApiKeyReferences: {
         method:"account_by_key_api.get_key_references",
-        params:"{\"keys\":[\"SHR4zzL6gvnajH6NH95s5z8JDdecHsPHd8rNzdraTiehkFGq7mjMb\"]}"
+        params:"{\"keys\":[\"GNX7FfSSdimKrQ9fW5tNnQ3h3nFdX1YMmCFhZDjvRJKnZaivT6HCM\"]}"
     },
     getApiAccountHistory: {
         method:"account_history_api.get_account_history",
-        params:"{\"account\":\"bilalhaider\", \"start\":-1, \"limit\":100}"
+        params:"{\"account\":\"Starfall\", \"start\":-1, \"limit\":100}"
     },
     getApiVirtualOperationsInBlock: {
         method:"account_history_api.get_ops_in_block",
@@ -476,7 +476,7 @@ voilk = (method, params="[]", single) => {
                 
                 if(ndata.json_metadata=='')
                 {
-                    ndata.json_metadata = '{"profile":{"profile_image":"https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
+                    ndata.json_metadata = '{"profile":{"profile_image":"http://graphql.gnexportal.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
                 }
                 let profile = JSON.parse(ndata.json_metadata);
 
@@ -484,7 +484,7 @@ voilk = (method, params="[]", single) => {
                     profile.profile.profile_image == "" || 
                     profile.profile.profile_image == "https://image.flaticon.com/icons/svg/1372/1372315.svg")
                 {
-                    profile.profile.profile_image = "https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg"
+                    profile.profile.profile_image = "https://graphql.gnexportal.com/image/e40fee86e46168b14e0f048f7c236829.jpeg"
 
                 }
                 ndata.json_metadata = profile.profile;
@@ -499,12 +499,12 @@ voilk = (method, params="[]", single) => {
                 
                     if(ndata.json_metadata=='')
                     {
-                        ndata.json_metadata = '{"profile":{"profile_image":"https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
+                        ndata.json_metadata = '{"profile":{"profile_image":"https://graphql.gnexportal.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
                     }
                     let profile = JSON.parse(ndata.json_metadata);
                     if(!profile.profile.profile_image || profile.profile.profile_image == "" || profile.profile.profile_image == "https://image.flaticon.com/icons/svg/1372/1372315.svg")
                     {
-                        profile.profile.profile_image = "https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg"
+                        profile.profile.profile_image = "https://graphql.gnexportal.com/image/e40fee86e46168b14e0f048f7c236829.jpeg"
                         
                     }
                     ndata.json_metadata = profile.profile;
