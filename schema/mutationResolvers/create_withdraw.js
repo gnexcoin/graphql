@@ -51,7 +51,7 @@ const create_withdraw = {
         let ltm = (month_s.length===1)?month_s[0].count:0
         
         assert((ltm+amount)<=membership.max_withdrawal, `Withdrawal limit Try: ${membership.max_withdrawal - ltm}$`)
-        let amt = amount.toFixed(3) + " VSD" 
+        let amt = amount.toFixed(3) + " GBD" 
 
         const tr = await transfer(args.username, args.wif, "company", amt, "Withdrawal: " + args.method)
         assert(tr, "We could not deduct the balance.")
