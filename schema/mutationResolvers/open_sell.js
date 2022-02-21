@@ -25,9 +25,9 @@ const open_sell = {
         console.log(args)
         if(count > 10) count = 10
 
-        let amountToSell = amount.toFixed(3) + " VOILK"
+        let amountToSell = amount.toFixed(3) + " GNEX"
         let receive = amount * exchange_rate
-        let minToReceive = receive.toFixed(3) + " VSD"
+        let minToReceive = receive.toFixed(3) + " GBD"
         const fillOrKill = false
         const t28 = 28 * 24 * 60 * 60
         const current = Date.now() / 1000 | 0
@@ -38,9 +38,9 @@ const open_sell = {
         for (let i = 0; i < count; i++) {
             if(i !=0 ) exchange_rate += step
             
-            amountToSell = amount.toFixed(3) + " VOILK"
+            amountToSell = amount.toFixed(3) + " GNEX"
             receive = amount * exchange_rate
-            minToReceive = receive.toFixed(3) + " VSD"
+            minToReceive = receive.toFixed(3) + " GBD"
             orderid = Math.floor(Math.random() * 10000000) + 10000;
         
             
