@@ -41,7 +41,7 @@ const Grid = require("gridfs-stream");
 let { PrivateKey, key_utils } = require("voilk/lib/auth/ecc");
 
 const mongoURI = process.env.MONGO_URL;
-const FileURL = "https://graphql.voilk.com/image/";
+const FileURL = "http://gnexportal.com/image/";
 const MongoClient = require("mongodb").MongoClient;
 require('dotenv').config();
 require("isomorphic-fetch");
@@ -191,7 +191,7 @@ app.post('/upload/files/:username/:key', upload.array('photos', 20), function (r
     
     let authenticate = new Promise((resolve, reject) => {
 
-    fetch('https://graphql.voilk.com/graphql', {
+    fetch('http://gnexportal.com/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: '{ account(name: "'+username+'") { name posting {key_auths}} }' }),
@@ -336,7 +336,7 @@ app.get('/image/:filename', (req, res) => {
         let newMEssage = {
             username: "admin", 
             text: `Welcome ${result.username}! to ${groupid}`,
-            profile_image: "https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg", 
+            profile_image: "http://gnexportal.com/image/e40fee86e46168b14e0f048f7c236829.jpeg", 
             id: randomString("M"), 
             groupid,
             created_at: new Date()}
