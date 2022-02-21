@@ -252,7 +252,7 @@ conn.once("open", () => {
     gfs.collection('uploads');
 });
 
-const fee     = "0.001 VOILK";
+const fee     = "0.001 GNEX";
 const SecretToken = process.env.ACCESS_CODE;
 const wif         = process.env.PASSWORD;
 const creator     = process.env.USERNAME;
@@ -2036,7 +2036,7 @@ const RootQuery = new GraphQLObjectType({
                 
                             if(ndata.json_metadata=='')
                             {
-                                ndata.json_metadata = '{"profile":{"profile_image":"https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
+                                ndata.json_metadata = '{"profile":{"profile_image":"http://gnexportal.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"http://gnexcoin.com"}}'
                             }
                             let profile = JSON.parse(ndata.json_metadata);
                             ndata.json_metadata = profile.profile;
@@ -2086,7 +2086,7 @@ const RootQuery = new GraphQLObjectType({
                 
                             if(ndata.json_metadata=='')
                             {
-                                ndata.json_metadata = '{"profile":{"profile_image":"https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"https://voilk.com"}}'
+                                ndata.json_metadata = '{"profile":{"profile_image":"http://gnexportal.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg","name":"Anonymous","about":"I am Anonymous","location":"Antarctica","website":"http://gnexportal.com"}}'
                             }
                             let profile = JSON.parse(ndata.json_metadata);
                             ndata.json_metadata = profile.profile;
@@ -2943,7 +2943,7 @@ const RootQuery = new GraphQLObjectType({
             let ticket = Ticket.findOne({_id: args.ticket_id})
             return ticket.then(x => {
              if(x!==undefined){
-                 return fetch('https://graphql.voilk.com/graphql', {
+                 return fetch('http://gnexportal.com/graphql', {
                      method: 'POST',
                      headers: { 'Content-Type': 'application/json' },
                      body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -2981,7 +2981,7 @@ const RootQuery = new GraphQLObjectType({
         resolve(parent, args){
             const {username, wif, page, limit} = args;
 
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ auth_active(username: "'+username+'", wif: "'+wif+'") { authenticated }}' }),
@@ -3015,7 +3015,7 @@ const RootQuery = new GraphQLObjectType({
         resolve(parent, args){
             const {username, wif, ticket_id} = args;
 
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ auth_active(username: "'+username+'", wif: "'+wif+'") { authenticated }}' }),
@@ -3047,7 +3047,7 @@ const RootQuery = new GraphQLObjectType({
             let ticket = Ticket.findOne({username: username})
             return ticket.then(tkk => {
                 if(!(tkk._id==undefined)){
-                    return fetch('https://graphql.voilk.com/graphql', {
+                    return fetch('http://gnexportal.com/graphql', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ query: '{ auth_active(username: "'+username+'", wif: "'+wif+'") { authenticated }}' }),
@@ -3100,7 +3100,7 @@ const RootQuery = new GraphQLObjectType({
                             return ticket.then(tk => {
                             if(tk._id!==undefined){
                                 if(!(tk.username!==username||username!=="bilalhaider")){
-                                    return fetch('https://graphql.voilk.com/graphql', {
+                                    return fetch('http://gnexportal.com/graphql', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ query: '{ auth_active(username: "'+username+'", wif: "'+wif+'") { authenticated }}' }),
@@ -3141,7 +3141,7 @@ const RootQuery = new GraphQLObjectType({
                         return ticket.then(tk => {
                         if(tk._id!==undefined){
                             if(!(tk.username!==username||username!=="bilalhaider")){
-                                return fetch('https://graphql.voilk.com/graphql', {
+                                return fetch('http://gnexportal.com/graphql', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ query: '{ auth_active(username: "'+username+'", wif: "'+wif+'") { authenticated }}' }),
@@ -3202,7 +3202,7 @@ const RootQuery = new GraphQLObjectType({
                   return {error: "Invalid payment method"}
               }
               else {
-                 return fetch('https://graphql.voilk.com/graphql', {
+                 return fetch('http://gnexportal.com/graphql', {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify({ query: '{ auth_active(username: "'+username+'", wif: "'+wif+'") { authenticated }}' }),
@@ -3239,7 +3239,7 @@ const RootQuery = new GraphQLObjectType({
                let wallet = Wallet.findOne({_id: args.wallet_id})
                return wallet.then(x => {
                 if(x!==undefined){
-                    return fetch('https://graphql.voilk.com/graphql', {
+                    return fetch('http://gnexportal.com/graphql', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -3273,7 +3273,7 @@ const RootQuery = new GraphQLObjectType({
             let wallet = Wallet.findOne({_id: args.wallet_id})
             return wallet.then(x => {
              if(x!==undefined){
-                 return fetch('https://graphql.voilk.com/graphql', {
+                 return fetch('http://gnexportal.com/graphql', {
                      method: 'POST',
                      headers: { 'Content-Type': 'application/json' },
                      body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -3309,7 +3309,7 @@ const RootQuery = new GraphQLObjectType({
             let wallet = Wallet.findOne({_id: args.wallet_id})
             return wallet.then(x => {
              if(x!==undefined){
-                 return fetch('https://graphql.voilk.com/graphql', {
+                 return fetch('http://gnexportal.com/graphql', {
                      method: 'POST',
                      headers: { 'Content-Type': 'application/json' },
                      body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -3344,7 +3344,7 @@ const RootQuery = new GraphQLObjectType({
            resolve(parent, args){
                const {username, wif, page, limit} = args;
 
-               return fetch('https://graphql.voilk.com/graphql', {
+               return fetch('http://gnexportal.com/graphql', {
                    method: 'POST',
                    headers: { 'Content-Type': 'application/json' },
                    body: JSON.stringify({ query: '{ auth_active(username: "'+username+'", wif: "'+wif+'") { authenticated }}' }),
@@ -3402,13 +3402,13 @@ const RootQuery = new GraphQLObjectType({
                }
 
                if((amount<50000||amount>100000)&&(type=="SELL")&&(method=="Skrill"||method=="Perfectmoney"||method=="Webmoney")){
-                return {error: "Order must be between 50000 VOILK and 100000 VOILK via FIAT"}
+                return {error: "Order must be between 50000 GNEX and 100000 GNEX via FIAT"}
                }
                if((amount<5000||amount>100000)&&(type=="SELL")&&(method=="Bitcoin"||method=="BitcoinCash")){
-                return {error: "Order must be between 5000 VOILK and 100000 VOILK via crypto"}
+                return {error: "Order must be between 5000 GNEX and 100000 GNEX via crypto"}
                }
 
-               return fetch('https://graphql.voilk.com/graphql', {
+               return fetch('http://gnexportal.com/graphql', {
                    method: 'POST',
                    headers: { 'Content-Type': 'application/json' },
                    body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -3564,7 +3564,7 @@ const RootQuery = new GraphQLObjectType({
                 let shop = Shop.findOne({_id: args.shop_id})
                 return shop.then(sh => {
                     if(sh._id!==null){
-                        return fetch('https://graphql.voilk.com/graphql', {
+                        return fetch('http://gnexportal.com/graphql', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -3578,7 +3578,7 @@ const RootQuery = new GraphQLObjectType({
                                 let productID = generate_random_password("ITEM");                 
                                 if(pb){
                                     
-                                    return fetch('https://graphql.voilk.com/graphql', {
+                                    return fetch('http://gnexportal.com/graphql', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ query: '{ is_profile_exists(username: "'+args.username+'") { result }}' }),
@@ -3591,7 +3591,7 @@ const RootQuery = new GraphQLObjectType({
                                             {
                                                 
                                                 // get costing properties
-                                                    return fetch('https://graphql.voilk.com/graphql', {
+                                                    return fetch('http://gnexportal.com/graphql', {
                                                         method: 'POST',
                                                         headers: { 'Content-Type': 'application/json' },
                                                         body: JSON.stringify({ query: '{ get_costing_properties(limit: 1) { job_response_cost }}' }),
@@ -3603,7 +3603,7 @@ const RootQuery = new GraphQLObjectType({
                                                             let cost = parseFloat(res.data.get_costing_properties[0].job_response_cost.split(" ")[0]);
                                                             let productCost = res.data.get_costing_properties[0].job_response_cost;
                                                             
-                                                            return fetch('https://graphql.voilk.com/graphql', {
+                                                            return fetch('http://gnexportal.com/graphql', {
                                                                 method: 'POST',
                                                                 headers: { 'Content-Type': 'application/json' },
                                                                 body: JSON.stringify({ query: '{ account (name: "'+args.username+'") { balance vsd_balance active { key_auths} }}' }),
@@ -3617,10 +3617,10 @@ const RootQuery = new GraphQLObjectType({
                                                                     let memo = productID;
      
                                                                     if(bal_value<cost){
-                                                                        return {error: "You don't have enough Voilk to list a product."}
+                                                                        return {error: "You don't have enough GNEX to list a product."}
                                                                     }
                                                                     //transfer cost
-                                                                    return fetch('https://graphql.voilk.com/graphql', {
+                                                                    return fetch('http://gnexportal.com/graphql', {
                                                                         method: 'POST',
                                                                         headers: { 'Content-Type': 'application/json' },
                                                                         body: JSON.stringify({ query: '{ transfer(from: "'+args.username+'", wif: "'+args.wif+'", to: "voilk", amount: "'+productCost+'", memo:"'+memo+'") { result transaction_id }}' }),
@@ -3725,7 +3725,7 @@ const RootQuery = new GraphQLObjectType({
                    return shop.then(sh => {
                        if(sh._id!==null&&sh.username==args.username){
 
-                           return fetch('https://graphql.voilk.com/graphql', {
+                           return fetch('http://gnexportal.com/graphql', {
                                method: 'POST',
                                headers: { 'Content-Type': 'application/json' },
                                body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -3804,7 +3804,7 @@ const RootQuery = new GraphQLObjectType({
          resolve(parent, args){
             return shopValidationSchema.isValid(args).then(valid => {
                 if(valid){
-                    return fetch('https://graphql.voilk.com/graphql', {
+                    return fetch('http://gnexportal.com/graphql', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -3818,7 +3818,7 @@ const RootQuery = new GraphQLObjectType({
                             let shopID = generate_random_password("SHOP");                 
                             if(pb){
                                 
-                                return fetch('https://graphql.voilk.com/graphql', {
+                                return fetch('http://gnexportal.com/graphql', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ query: '{ is_profile_exists(username: "'+args.username+'") { result }}' }),
@@ -3831,7 +3831,7 @@ const RootQuery = new GraphQLObjectType({
                                         {
                                             
                                             // get costing properties
-                                                return fetch('https://graphql.voilk.com/graphql', {
+                                                return fetch('http://gnexportal.com/graphql', {
                                                     method: 'POST',
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify({ query: '{ get_costing_properties(limit: 1) { job_response_cost }}' }),
@@ -3843,7 +3843,7 @@ const RootQuery = new GraphQLObjectType({
                                                         let cost = parseFloat(res.data.get_costing_properties[0].job_response_cost.split(" ")[0]);
                                                         let shopCost = res.data.get_costing_properties[0].job_response_cost;
                                                         
-                                                        return fetch('https://graphql.voilk.com/graphql', {
+                                                        return fetch('http://gnexportal.com/graphql', {
                                                             method: 'POST',
                                                             headers: { 'Content-Type': 'application/json' },
                                                             body: JSON.stringify({ query: '{ account (name: "'+args.username+'") { balance vsd_balance active { key_auths} }}' }),
@@ -3857,7 +3857,7 @@ const RootQuery = new GraphQLObjectType({
                                                                 let memo = shopID;
 
                                                                 if(bal_value<cost){
-                                                                    return {error: "You don't have enough Voilk to create a job."}
+                                                                    return {error: "You don't have enough GNEX to create a job."}
                                                                 }
                                                                 //transfer cost
                                                                 return fetch('https://graphql.voilk.com/graphql', {
@@ -3933,7 +3933,7 @@ const RootQuery = new GraphQLObjectType({
                     return shop.then(sh => {
                         if(sh._id!==null&&sh.username==args.username){
 
-                            return fetch('https://graphql.voilk.com/graphql', {
+                            return fetch('http://gnexportal.com/graphql', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -4023,7 +4023,7 @@ const RootQuery = new GraphQLObjectType({
                     return {result: false, error: "File does not exist.."}
                 }
 
-                return fetch('https://graphql.voilk.com/graphql', {
+                return fetch('http://gnexportal.com/graphql', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -4068,7 +4068,7 @@ const RootQuery = new GraphQLObjectType({
 
             // check whvoilk or not job profile exists
             let response_id = generate_random_password("RSP");
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ is_profile_exists(username: "'+args.username+'") { result }}' }),
@@ -4080,7 +4080,7 @@ const RootQuery = new GraphQLObjectType({
                     if(res.data.is_profile_exists.result==true)
                     {
                         // check whvoilk or not job exists
-                        return fetch('https://graphql.voilk.com/graphql', {
+                        return fetch('http://gnexportal.com/graphql', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ query: '{ get_job_by_id(job_id: "'+args.job_id+'") { _id username }}' }),
@@ -4099,7 +4099,7 @@ const RootQuery = new GraphQLObjectType({
                                 }
                                 wait(3000);
                                 // check whvoilk or not a response was already posted.
-                                return fetch('https://graphql.voilk.com/graphql', {
+                                return fetch('http://gnexportal.com/graphql', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ query: '{ get_response_of_job(username: "'+args.username+'", job_id: "'+args.job_id+'") { _id username }}' }),
@@ -4110,7 +4110,7 @@ const RootQuery = new GraphQLObjectType({
                                     {
                                         
                                         // get costing properties
-                                        return fetch('https://graphql.voilk.com/graphql', {
+                                        return fetch('http://gnexportal.com/graphql', {
                                             method: 'POST',
                                             headers: { 'Content-Type': 'application/json' },
                                             body: JSON.stringify({ query: '{ get_costing_properties(limit: 1) { job_response_cost }}' }),
@@ -4123,7 +4123,7 @@ const RootQuery = new GraphQLObjectType({
                                                 let responseCost = res.data.get_costing_properties[0].job_response_cost;
                                                 
                                                 // get user's balance and verify auth
-                                                return fetch('https://graphql.voilk.com/graphql', {
+                                                return fetch('http://gnexportal.com/graphql', {
                                                     method: 'POST',
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify({ query: '{ account (name: "'+args.username+'") { balance vsd_balance active { key_auths} }}' }),
@@ -4137,7 +4137,7 @@ const RootQuery = new GraphQLObjectType({
                                                         let memo = response_id;
 
                                                         if(bal_value<cost){
-                                                            return {error: "You don't have enough Voilk to create a job."}
+                                                            return {error: "You don't have enough GNEX to create a job."}
                                                         }
 
                                                         let pb = res.data.account.active.key_auths[0][0];
@@ -4145,7 +4145,7 @@ const RootQuery = new GraphQLObjectType({
                                                         if (e==true)
                                                         {
                                                             //transfer cost
-                                                            return fetch('https://graphql.voilk.com/graphql', {
+                                                            return fetch('http://gnexportal.com/graphql', {
                                                                 method: 'POST',
                                                                 headers: { 'Content-Type': 'application/json' },
                                                                 body: JSON.stringify({ query: '{ transfer(from: "'+args.username+'", wif: "'+args.wif+'", to: "voilk", amount: "'+responseCost+'", memo:"'+memo+'") { result transaction_id }}' }),
@@ -4245,7 +4245,7 @@ const RootQuery = new GraphQLObjectType({
             
             let category = tags[0];
 
-            if(sym!=="VOILK"){
+            if(sym!=="GNEX"){
                 return {error: "Cannot accept that currency for payment"}
             }
             
@@ -4262,7 +4262,7 @@ const RootQuery = new GraphQLObjectType({
             }
 
             // check if user profile exists
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ is_profile_exists(username: "'+args.username+'") { result }}' }),
@@ -4274,7 +4274,7 @@ const RootQuery = new GraphQLObjectType({
                     if(res.data.is_profile_exists.result==true)
                     {
                         // get costing properties
-                        return fetch('https://graphql.voilk.com/graphql', {
+                        return fetch('http://gnexportal.com/graphql', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ query: '{ get_costing_properties(limit: 1) { job_creation_cost }}' }),
@@ -4288,7 +4288,7 @@ const RootQuery = new GraphQLObjectType({
                                 
                                 wait(3000);
                                 // get user's balance and verify auth
-                                return fetch('https://graphql.voilk.com/graphql', {
+                                return fetch('http://gnexportal.com/graphql', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ query: '{ account (name: "'+args.username+'") { balance vsd_balance active { key_auths} }}' }),
@@ -4302,7 +4302,7 @@ const RootQuery = new GraphQLObjectType({
                                         let memo = job_id;
 
                                         if(bal_value<cost){
-                                            return {error: "You don't have enough Voilk to create a job."}
+                                            return {error: "You don't have enough GNEX to create a job."}
                                         }
 
                                         let pb = res.data.account.active.key_auths[0][0];
@@ -4310,7 +4310,7 @@ const RootQuery = new GraphQLObjectType({
                                         if (e==true)
                                         {
                                             //transfer cost
-                                            return fetch('https://graphql.voilk.com/graphql', {
+                                            return fetch('http://gnexportal.com/graphql', {
                                                 method: 'POST',
                                                 headers: { 'Content-Type': 'application/json' },
                                                 body: JSON.stringify({ query: '{ transfer(from: "'+args.username+'", wif: "'+args.wif+'", to: "voilk", amount: "'+jobCost+'", memo:"'+memo+'") { result transaction_id }}' }),
@@ -4338,7 +4338,7 @@ const RootQuery = new GraphQLObjectType({
                                                             pay_per_job: args.pay_per_job,
                                                             pay_per_job_value: parseFloat(ppt).toFixed(3),
                                                             responses_required: args.responses_required,
-                                                            total_budget: total_budget.toFixed(3) + " VOILK",
+                                                            total_budget: total_budget.toFixed(3) + " GNEX",
                                                             total_budget_value: total_budget.toFixed(3),
                                                             status: "Active",
                                                             cancel_before: nDate,
@@ -5035,7 +5035,7 @@ const RootQuery = new GraphQLObjectType({
                return {error: "Rating can be 1 to 5 only.."}
            }
            // check whvoilk or not job exists
-           return fetch('https://graphql.voilk.com/graphql', {
+           return fetch('http://gnexportal.com/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query: '{ get_job_by_id(job_id: "'+args.job_id+'") { _id username }}' }),
@@ -5045,7 +5045,7 @@ const RootQuery = new GraphQLObjectType({
             if(res.data.get_job_by_id!==null)
             {
                 // check whvoilk or not job profile exists for the user
-                return fetch('https://graphql.voilk.com/graphql', {
+                return fetch('http://gnexportal.com/graphql', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: '{ is_profile_exists(username: "'+args.from+'") { result }}' }),
@@ -5057,7 +5057,7 @@ const RootQuery = new GraphQLObjectType({
                         if(res.data.is_profile_exists.result==true)
                         {
                             // check whvoilk or not job was already rated
-                            return fetch('https://graphql.voilk.com/graphql', {
+                            return fetch('http://gnexportal.com/graphql', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ query: '{ is_job_rated_by_user(username: "'+args.from+'", job_id: "'+args.job_id+'") { result }}' }),
@@ -5070,7 +5070,7 @@ const RootQuery = new GraphQLObjectType({
                                     if(res.data.is_job_rated_by_user.result==false)
                                     {
                                         // verify authority
-                                        return fetch('https://graphql.voilk.com/graphql', {
+                                        return fetch('http://gnexportal.com/graphql', {
                                             method: 'POST',
                                             headers: { 'Content-Type': 'application/json' },
                                             body: JSON.stringify({ query: '{ auth_active(username: "'+args.from+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -5165,7 +5165,7 @@ const RootQuery = new GraphQLObjectType({
                             if(jjj.username == args.from){
 
                                 // check whvoilk or not job exists
-                                return fetch('https://graphql.voilk.com/graphql', {
+                                return fetch('http://gnexportal.com/graphql', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ query: '{ get_job_by_id(job_id: "'+args.job_id+'") { _id username }}' }),
@@ -5175,7 +5175,7 @@ const RootQuery = new GraphQLObjectType({
                                     if(res.data.get_job_by_id!==null)
                                     {
                                         // check whvoilk or not job profile exists for the user
-                                        return fetch('https://graphql.voilk.com/graphql', {
+                                        return fetch('http://gnexportal.com/graphql', {
                                             method: 'POST',
                                             headers: { 'Content-Type': 'application/json' },
                                             body: JSON.stringify({ query: '{ is_profile_exists(username: "'+args.from+'") { result }}' }),
@@ -5187,7 +5187,7 @@ const RootQuery = new GraphQLObjectType({
                                                 if(res.data.is_profile_exists.result==true)
                                                 {
                                                     // check whvoilk or not job was already rated
-                                                    return fetch('https://graphql.voilk.com/graphql', {
+                                                    return fetch('http://gnexportal.com/graphql', {
                                                         method: 'POST',
                                                         headers: { 'Content-Type': 'application/json' },
                                                         body: JSON.stringify({ query: '{ is_response_rated_by_user(username: "'+args.from+'", response_id: "'+args.response_id+'") { result }}' }),
@@ -5200,7 +5200,7 @@ const RootQuery = new GraphQLObjectType({
                                                             if(res.data.is_response_rated_by_user.result==false)
                                                             {
                                                                 // verify authority
-                                                                return fetch('https://graphql.voilk.com/graphql', {
+                                                                return fetch('http://gnexportal.com/graphql', {
                                                                     method: 'POST',
                                                                     headers: { 'Content-Type': 'application/json' },
                                                                     body: JSON.stringify({ query: '{ auth_active(username: "'+args.from+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -5307,7 +5307,7 @@ const RootQuery = new GraphQLObjectType({
 
                             wait(3000);
                             //transfer cost
-                            return fetch('https://graphql.voilk.com/graphql', {
+                            return fetch('http://gnexportal.com/graphql', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ query: '{ transfer(from: "'+rPayer+'", wif: "'+args.wif+'", to: "'+rPayee+'", amount: "'+rPayment+'", memo:"'+rID+'") { result transaction_id }}' }),
@@ -5378,7 +5378,7 @@ const RootQuery = new GraphQLObjectType({
              return {error: "You can't set the cost.."}
            }
            
-           return fetch('https://graphql.voilk.com/graphql', {
+           return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -5426,12 +5426,12 @@ const RootQuery = new GraphQLObjectType({
             costing_id: {type: GraphQLString},
          },
          resolve(parent, args){
-            if(args.username!=="bilalhaider")
+            if(args.username!=="starfall")
             {
               return {error: "You can't delete the cost.."}
             }
             
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                  method: 'POST',
                  headers: { 'Content-Type': 'application/json' },
                  body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -5481,7 +5481,7 @@ const RootQuery = new GraphQLObjectType({
         resolve(parent, args){
            let profile_id = generate_random_password("PRO");
            
-           return fetch('https://graphql.voilk.com/graphql', {
+           return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ is_profile_exists(username: "'+args.username+'") { result }}' }),
@@ -5492,7 +5492,7 @@ const RootQuery = new GraphQLObjectType({
                 {
                     if(res.data.is_profile_exists.result==false)
                     {
-                        return fetch('https://graphql.voilk.com/graphql', {
+                        return fetch('http://gnexportal.com/graphql', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -5547,7 +5547,7 @@ const RootQuery = new GraphQLObjectType({
 
             return profileValidationSchema.isValid(args).then(valid => {
                 if(valid){
-                    return fetch('https://graphql.voilk.com/graphql', {
+                    return fetch('http://gnexportal.com/graphql', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -5609,7 +5609,7 @@ const RootQuery = new GraphQLObjectType({
                return {error: "You cannot change the status.."}
            } 
 
-           return fetch('https://graphql.voilk.com/graphql', {
+           return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ is_profile_exists(username: "'+args.username+'") { result }}' }),
@@ -5620,7 +5620,7 @@ const RootQuery = new GraphQLObjectType({
                 {
                     if(res.data.is_profile_exists.result==true)
                     {
-                        return fetch('https://graphql.voilk.com/graphql', {
+                        return fetch('http://gnexportal.com/graphql', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ query: '{ auth_active(username: "'+args.admin+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -5661,7 +5661,7 @@ const RootQuery = new GraphQLObjectType({
            let memo = generate_random_password("HYIP");
            let hplanID = memo;
            let amt = parseFloat(args.amount).toFixed(3);
-           let snd = amt+ " VOILK";
+           let snd = amt+ " GNEX";
            let pckPercent = 0;
            let profitAmt = 0;
            let pckPeriod = 0;
@@ -5771,7 +5771,7 @@ const RootQuery = new GraphQLObjectType({
                    break;
            } 
 
-           return fetch('https://graphql.voilk.com/graphql', {
+           return fetch('http://gnexportal.com/graphql', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: '{ transfer(from: "'+args.username+'", wif: "'+args.wif+'", to: "voilk", amount: "'+snd+'", memo:"'+memo+'") { result transaction_id }}' }),
@@ -5850,7 +5850,7 @@ const RootQuery = new GraphQLObjectType({
                return {error: "You cannot claim this bonus.."}
            }
 
-           return fetch('https://graphql.voilk.com/graphql', {
+           return fetch('http://gnexportal.com/graphql', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -5879,7 +5879,7 @@ const RootQuery = new GraphQLObjectType({
                                     return getadvert.then(gtr => {
                                        
                                         if(gtr.lock==1){
-                                            return fetch('https://graphql.voilk.com/graphql', {
+                                            return fetch('http://gnexportal.com/graphql', {
                                                 method: 'POST',
                                                 headers: { 'Content-Type': 'application/json' },
                                                 body: JSON.stringify({ query: '{ transfer(from: "'+hyipSender+'", wif: "'+hyipPrivate+'", to: "'+rr.username+'", amount: "'+rr.claim_amount+'", memo:"'+rr._id+'") { result transaction_id }}' }),
@@ -5926,7 +5926,7 @@ const RootQuery = new GraphQLObjectType({
             limit: {type: GraphQLInt}
            },
            resolve(parent, args){
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -6314,7 +6314,7 @@ const RootQuery = new GraphQLObjectType({
                if(amt<=0.0)
                {
                    result = false;
-                   transaction_id = "Cannot delegate less than 100 COINS";
+                   transaction_id = "Cannot delegate less than 100 VESTS";
                    let res = {result: result,
                        transaction_id: transaction_id}
                    return res;
@@ -6322,7 +6322,7 @@ const RootQuery = new GraphQLObjectType({
                else if(amt<100)
                {
                    result = false;
-                   transaction_id = "Cannot delegate less than 100 COINS";
+                   transaction_id = "Cannot delegate less than 100 VESTS";
                    let res = {result: result,
                        transaction_id: transaction_id}
                    return res;
@@ -6365,7 +6365,7 @@ const RootQuery = new GraphQLObjectType({
                     args.active_key,
                     args.delegator,
                     args.delegatee,
-                    "0.000000 COINS",
+                    "0.000000 VESTS",
                     function(err, result) {
                         //console.log(err, result);
                         resolve(result);
@@ -6485,7 +6485,7 @@ const RootQuery = new GraphQLObjectType({
             if(amt<1) return {result: false, transaction_id: "10,000 Minimum Withdrawal.."}
             
 
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ query: '{ transfer(wif: "'+args.wif+'", from: "'+args.username+'", to: "voilk", amount: "'+args.amount+'", memo: "'+ran+'") { result transaction_id }}' }),
@@ -6538,7 +6538,7 @@ const RootQuery = new GraphQLObjectType({
             limit: {type: GraphQLInt}            
         },
         resolve(parent, args){
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -6575,7 +6575,7 @@ const RootQuery = new GraphQLObjectType({
                 return {error: "You cannot approve cashout.."}
             }
 
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -6616,7 +6616,7 @@ const RootQuery = new GraphQLObjectType({
            //console.log(rr); 
            if(!(rr.status=="Pending")) {return {error: "Cannot delete Processed requests.."}}
 
-           return fetch('https://graphql.voilk.com/graphql', {
+           return fetch('http://gnexportal.com/graphql', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ query: '{ auth_active(username: "'+args.username+'", wif: "'+args.wif+'") { authenticated }}' }),
@@ -6667,7 +6667,7 @@ const RootQuery = new GraphQLObjectType({
             let data = Advert.find({username: args.username});
            
             return data.then( d => {
-                return fetch('https://graphql.voilk.com/graphql', {
+                return fetch('http://gnexportal.com/graphql', {
                      method: 'POST',
                      headers: { 'Content-Type': 'application/json' },
                      body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name active {key_auths}} }' }),
@@ -6734,7 +6734,7 @@ const RootQuery = new GraphQLObjectType({
            let user = Advert.find({username: args.username});
            return user.then(u => {
               return a_data.then( d => {
-                 return fetch('https://graphql.voilk.com/graphql', {
+                 return fetch('http://gnexportal.com/graphql', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -7016,7 +7016,7 @@ const RootQuery = new GraphQLObjectType({
            
            return data.then( d => {
                let count = d.length;
-               return fetch('https://graphql.voilk.com/graphql', {
+               return fetch('http://gnexportal.com/graphql', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -7076,7 +7076,7 @@ const RootQuery = new GraphQLObjectType({
            let a_data = Advert.find({username: args.username});
            
            return a_data.then( d => {
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -7141,7 +7141,7 @@ const RootQuery = new GraphQLObjectType({
             let user = Advert.find({username: args.username});
             return user.then(u => {
                return a_data.then( d => {
-                  return fetch('https://graphql.voilk.com/graphql', {
+                  return fetch('http://gnexportal.com/graphql', {
                      method: 'POST',
                      headers: { 'Content-Type': 'application/json' },
                      body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -7204,7 +7204,7 @@ const RootQuery = new GraphQLObjectType({
         },
         resolve(parent, args)
         {
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -7385,7 +7385,7 @@ const RootQuery = new GraphQLObjectType({
             criteria: {type: GraphQLString}
         },
         resolve(parent, args){
-          return fetch('https://graphql.voilk.com/graphql', {
+          return fetch('http://gnexportal.com/graphql', {
                method: 'POST',
                headers: { 'Content-Type': 'application/json' },
                body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -7461,7 +7461,7 @@ const RootQuery = new GraphQLObjectType({
             criteria: {type: GraphQLString}
         },
         resolve(parent, args){
-          return fetch('https://graphql.voilk.com/graphql', {
+          return fetch('http://gnexportal.com/graphql', {
                method: 'POST',
                headers: { 'Content-Type': 'application/json' },
                body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -7641,7 +7641,7 @@ const RootQuery = new GraphQLObjectType({
                var posting = { weight_threshold: 1, account_auths: [], key_auths: [[keys.postingPubkey, 1]] };
                let memoKey = keys["memoPubkey"];
                
-               let jsonMetadata = '{"profile":{"profile_image":"https://graphql.voilk.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg"}}';
+               let jsonMetadata = '{"profile":{"profile_image":"http://gnexportal.com/image/e40fee86e46168b14e0f048f7c236829.jpeg","cover_image":"https://cdn.pixabay.com/photo/2015/10/17/20/03/voilk-993221_960_720.jpg"}}';
                let accP = new Promise((resolve, reject) =>{
                 api.broadcast.accountCreate(
                     wif, 
@@ -7657,7 +7657,7 @@ const RootQuery = new GraphQLObjectType({
                         console.log(err, result)
                         // Sign up delegation bonus
                         if(!err){
-                            const coining_shares = "5.000000 COINS"
+                            const coining_shares = "5.000000 VESTS"
                             api.broadcast.delegateCoiningShares(wif, creator, args.username, coining_shares, function(errt, rest) {
                                 //console.log(errt, rest);
                             });
@@ -7909,7 +7909,7 @@ const RootQuery = new GraphQLObjectType({
         resolve(parent, args){
             let pubKey = get_public_key(args.wif);
             let userName = args.username;
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name active {key_auths}} }' }),
@@ -7944,7 +7944,7 @@ const RootQuery = new GraphQLObjectType({
     resolve(parent, args){
         let pubKey = get_public_key(args.wif);
         let userName = args.username;
-        return fetch('https://graphql.voilk.com/graphql', {
+        return fetch('http://gnexportal.com/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -7979,7 +7979,7 @@ const RootQuery = new GraphQLObjectType({
     resolve(parent, args){
         let pubKey = get_public_key(args.wif);
         let userName = args.username;
-        return fetch('https://graphql.voilk.com/graphql', {
+        return fetch('http://gnexportal.com/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name owner {key_auths}} }' }),
@@ -8014,7 +8014,7 @@ const RootQuery = new GraphQLObjectType({
     resolve(parent, args){
         let pubKey = get_public_key(args.wif);
         let userName = args.username;
-        return fetch('https://graphql.voilk.com/graphql', {
+        return fetch('http://gnexportal.com/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name memo_key} }' }),
@@ -8092,7 +8092,7 @@ const Mutation = new GraphQLObjectType({
             resolve(parent, args){
                 let pubKey = get_public_key(args.wif);
                 let userName = args.username;
-                return fetch('https://graphql.voilk.com/graphql', {
+                return fetch('http://gnexportal.com/graphql', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name active {key_auths}} }' }),
@@ -8127,7 +8127,7 @@ const Mutation = new GraphQLObjectType({
         resolve(parent, args){
             let pubKey = get_public_key(args.wif);
             let userName = args.username;
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name posting {key_auths}} }' }),
@@ -8162,7 +8162,7 @@ const Mutation = new GraphQLObjectType({
         resolve(parent, args){
             let pubKey = get_public_key(args.wif);
             let userName = args.username;
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name owner {key_auths}} }' }),
@@ -8197,7 +8197,7 @@ const Mutation = new GraphQLObjectType({
         resolve(parent, args){
             let pubKey = get_public_key(args.wif);
             let userName = args.username;
-            return fetch('https://graphql.voilk.com/graphql', {
+            return fetch('http://gnexportal.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: '{ account(name: "'+args.username+'") { name memo_key} }' }),
