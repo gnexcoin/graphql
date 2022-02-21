@@ -44,7 +44,7 @@ function authUser(username, key, id){
     }
 
     let authPromise = new Promise((resolve, reject) => {
-        fetch('https://graphql.voilk.com/graphql', {
+        fetch('http://gnexportal.com/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
